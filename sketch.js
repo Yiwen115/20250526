@@ -57,12 +57,12 @@ function draw() {
       });
     } else if (gesture === "scissors") {
       // 剪刀：額頭畫綠色橢圓
-      stroke(0, 200, 0); // 綠色
+      stroke(0, 255, 0); // 更亮的綠色
       const pos = keypoints[10];
       ellipse(pos[0], pos[1], 100, 60);
     } else if (gesture === "paper") {
       // 布：左右臉頰畫藍色橢圓
-      stroke(0, 0, 255); // 藍色
+      stroke(0, 128, 255); // 更亮的藍色
       const leftCheek = keypoints[234];
       const rightCheek = keypoints[454];
       ellipse(leftCheek[0], leftCheek[1], 80, 80);
