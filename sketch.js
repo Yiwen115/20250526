@@ -38,42 +38,32 @@ function draw() {
 
   if (predictions.length > 0) {
     const keypoints = predictions[0].scaledMesh;
-    let pos;
-
-    // 根據手勢決定圓圈位置
-    if (gesture === "rock") {
-      // 額頭（第10點）
-      pos = keypoints[10];
-    } else if (gesture === "scissors") {
-      // 左右眼睛所有點的平均中心
-      const leftEyeIndices = [133,173,157,158,159,160,161,246,33,7,163,144,145,153,154,155];
-      const rightEyeIndices = [263,466,388,387,386,385,384,398,362,382,381,380,374,373,390,249];
-      let leftSum = [0, 0], rightSum = [0, 0];
-      leftEyeIndices.forEach(idx => {
-        leftSum[0] += keypoints[idx][0];
-        leftSum[1] += keypoints[idx][1];
-      });
-      rightEyeIndices.forEach(idx => {
-        rightSum[0] += keypoints[idx][0];
-        rightSum[1] += keypoints[idx][1];
-      });
-      let leftCenter = [leftSum[0] / leftEyeIndices.length, leftSum[1] / leftEyeIndices.length];
-      let rightCenter = [rightSum[0] / rightEyeIndices.length, rightSum[1] / rightEyeIndices.length];
-      pos = [(leftCenter[0] + rightCenter[0]) / 2, (leftCenter[1] + rightCenter[1]) / 2];
-    } else if (gesture === "paper") {
-      // 左右臉頰（第234與454點的中點）
-      const leftCheek = keypoints[234];
-      const rightCheek = keypoints[454];
-      pos = [(leftCheek[0] + rightCheek[0]) / 2, (leftCheek[1] + rightCheek[1]) / 2];
-    } else {
-      // 預設第94點
-      pos = keypoints[94];
-    }
 
     noFill();
     stroke(255, 0, 0);
     strokeWeight(4);
-    ellipse(pos[0], pos[1], 100, 100);
+
+    if (gesture === "rock") {
+      // 左右眼睛（第33與263點）
+      const leftEye = keypoints[33];
+      const rightEye = keypoints[263];
+      ellipse(leftEye[0], leftEye[1], 80, 80);
+      ellipse(rightEye[0], rightEye[1], 80, 80);
+    } else if (gesture === "scissors") {
+      // 額頭（第10點）
+      const pos = keypoints[10];
+      ellipse(pos[0], pos[1], 100, 100);
+    } else if (gesture === "paper") {
+      // 左右臉頰（第234與454點）
+      const leftCheek = keypoints[234];
+      const rightCheek = keypoints[454];
+      ellipse(leftCheek[0], leftCheek[1], 80, 80);
+      ellipse(rightCheek[0], rightCheek[1], 80, 80);
+    } else {
+      // 預設第94點
+      const pos = keypoints[94];
+      ellipse(pos[0], pos[1], 100, 100);
+    }
 
     // 顯示手勢文字
     fill(0);
