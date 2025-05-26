@@ -45,14 +45,14 @@ function draw() {
     drawingContext.shadowBlur = 20;
 
     if (gesture === "rock") {
-      // 石頭：左右眼睛紅色半透明橢圓
+      // 石頭：左右眼睛紅色半透明橢圓，較小且不易重疊
       stroke(255, 0, 0, 180); // 紅色+透明度
       drawingContext.shadowColor = "red";
       strokeWeight(3);
       const leftEye = keypoints[33];
       const rightEye = keypoints[263];
-      ellipse(leftEye[0], leftEye[1], 60, 40);
-      ellipse(rightEye[0], rightEye[1], 60, 40);
+      ellipse(leftEye[0] - 10, leftEye[1], 40, 28);
+      ellipse(rightEye[0] + 10, rightEye[1], 40, 28);
     } else if (gesture === "scissors") {
       // 剪刀：額頭綠色半透明橢圓
       stroke(0, 255, 0, 180); // 綠色+透明度
