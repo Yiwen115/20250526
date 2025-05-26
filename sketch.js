@@ -44,15 +44,21 @@ function draw() {
     strokeWeight(4);
 
     if (gesture === "rock") {
-      // 左右眼睛（第33與263點）
-      const leftEye = keypoints[33];
-      const rightEye = keypoints[263];
-      ellipse(leftEye[0], leftEye[1], 80, 80);
-      ellipse(rightEye[0], rightEye[1], 80, 80);
+      // 左右眼睛多點畫橢圓
+      const leftEyeIndices = [133,173,157,158,159,160,161,246,33,7,163,144,145,153,154,155];
+      const rightEyeIndices = [263,466,388,387,386,385,384,398,362,382,381,380,374,373,390,249];
+      leftEyeIndices.forEach(idx => {
+        const pt = keypoints[idx];
+        ellipse(pt[0], pt[1], 30, 20);
+      });
+      rightEyeIndices.forEach(idx => {
+        const pt = keypoints[idx];
+        ellipse(pt[0], pt[1], 30, 20);
+      });
     } else if (gesture === "scissors") {
       // 額頭（第10點）
       const pos = keypoints[10];
-      ellipse(pos[0], pos[1], 100, 100);
+      ellipse(pos[0], pos[1], 100, 60);
     } else if (gesture === "paper") {
       // 左右臉頰（第234與454點）
       const leftCheek = keypoints[234];
