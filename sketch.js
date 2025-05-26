@@ -40,33 +40,36 @@ function draw() {
     const keypoints = predictions[0].scaledMesh;
 
     noFill();
-    stroke(255, 0, 0);
     strokeWeight(4);
 
     if (gesture === "rock") {
-      // 左右眼睛多點畫橢圓
+      // 石頭：左右眼睛多點畫紅色橢圓
+      stroke(255, 0, 0); // 紅色
       const leftEyeIndices = [133,173,157,158,159,160,161,246,33,7,163,144,145,153,154,155];
       const rightEyeIndices = [263,466,388,387,386,385,384,398,362,382,381,380,374,373,390,249];
       leftEyeIndices.forEach(idx => {
         const pt = keypoints[idx];
-        ellipse(pt[0], pt[1], 30, 20);
+        ellipse(pt[0], pt[1], 60, 40);
       });
       rightEyeIndices.forEach(idx => {
         const pt = keypoints[idx];
-        ellipse(pt[0], pt[1], 30, 20);
+        ellipse(pt[0], pt[1], 60, 40);
       });
     } else if (gesture === "scissors") {
-      // 額頭（第10點）
+      // 剪刀：額頭畫綠色橢圓
+      stroke(0, 200, 0); // 綠色
       const pos = keypoints[10];
       ellipse(pos[0], pos[1], 100, 60);
     } else if (gesture === "paper") {
-      // 左右臉頰（第234與454點）
+      // 布：左右臉頰畫藍色橢圓
+      stroke(0, 0, 255); // 藍色
       const leftCheek = keypoints[234];
       const rightCheek = keypoints[454];
       ellipse(leftCheek[0], leftCheek[1], 80, 80);
       ellipse(rightCheek[0], rightCheek[1], 80, 80);
     } else {
-      // 預設第94點
+      // 預設第94點，灰色
+      stroke(100);
       const pos = keypoints[94];
       ellipse(pos[0], pos[1], 100, 100);
     }
