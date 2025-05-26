@@ -34,9 +34,6 @@ function handModelReady() {
 }
 
 function draw() {
-  push();
-  translate(width, 0);
-  scale(-1, 1); // 水平翻轉
 
   image(video, 0, 0, width, height);
 
@@ -44,8 +41,6 @@ function draw() {
     const keypoints = predictions[0].scaledMesh;
 
     noFill();
-
-    // 陰影效果
     drawingContext.shadowBlur = 20;
 
     if (gesture === "rock") {
@@ -85,10 +80,9 @@ function draw() {
     textAlign(LEFT, TOP);
     text(gesture, 16, 12);
   }
-  pop();
 }
 
-// 手勢偵測（簡易版：根據手指張開數量判斷剪刀石頭布）
+// 手勢偵測
 function detectGesture(hands) {
   if (hands.length === 0) return "";
 
