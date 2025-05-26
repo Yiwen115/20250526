@@ -41,48 +41,49 @@ function draw() {
 
     noFill();
 
+    // 陰影效果
+    drawingContext.shadowBlur = 20;
+
     if (gesture === "rock") {
-      // 石頭：左右眼睛多點畫紅色橢圓，線條粗細3
-      stroke(255, 0, 0); // 紅色
+      // 石頭：左右眼睛紅色半透明橢圓
+      stroke(255, 0, 0, 180); // 紅色+透明度
+      drawingContext.shadowColor = "red";
       strokeWeight(3);
-      const leftEyeIndices = [133,173,157,158,159,160,161,246,33,7,163,144,145,153,154,155];
-      const rightEyeIndices = [263,466,388,387,386,385,384,398,362,382,381,380,374,373,390,249];
-      leftEyeIndices.forEach(idx => {
-        const pt = keypoints[idx];
-        ellipse(pt[0], pt[1], 60, 40);
-      });
-      rightEyeIndices.forEach(idx => {
-        const pt = keypoints[idx];
-        ellipse(pt[0], pt[1], 60, 40);
-      });
+      const leftEye = keypoints[33];
+      const rightEye = keypoints[263];
+      ellipse(leftEye[0], leftEye[1], 60, 40);
+      ellipse(rightEye[0], rightEye[1], 60, 40);
     } else if (gesture === "scissors") {
-      // 剪刀：額頭畫綠色橢圓
-      stroke(0, 255, 0); // 綠色
+      // 剪刀：額頭綠色半透明橢圓
+      stroke(0, 255, 0, 180); // 綠色+透明度
+      drawingContext.shadowColor = "lime";
       strokeWeight(4);
       const pos = keypoints[10];
       ellipse(pos[0], pos[1], 100, 60);
     } else if (gesture === "paper") {
-      // 布：左右臉頰畫藍色橢圓
-      stroke(0, 128, 255); // 藍色
+      // 布：左右臉頰藍色半透明橢圓
+      stroke(0, 128, 255, 180); // 藍色+透明度
+      drawingContext.shadowColor = "blue";
       strokeWeight(4);
       const leftCheek = keypoints[234];
       const rightCheek = keypoints[454];
       ellipse(leftCheek[0], leftCheek[1], 80, 80);
       ellipse(rightCheek[0], rightCheek[1], 80, 80);
-    } else {
-      // 預設第94點，灰色
-      stroke(100);
-      strokeWeight(4);
-      const pos = keypoints[94];
-      ellipse(pos[0], pos[1], 100, 100);
     }
 
-    // 顯示手勢文字
-    fill(0);
+    // 關閉陰影
+    drawingContext.shadowBlur = 0;
+
+    // 顯示手勢文字（加底色圓角框）
+    fill(255, 255, 255, 200);
+    stroke(0, 100);
+    strokeWeight(1);
+    rect(8, 8, 120, 40, 10);
     noStroke();
+    fill(0);
     textSize(32);
     textAlign(LEFT, TOP);
-    text(gesture, 10, 10);
+    text(gesture, 16, 12);
   }
 }
 
