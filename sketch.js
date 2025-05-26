@@ -34,6 +34,10 @@ function handModelReady() {
 }
 
 function draw() {
+  push();
+  translate(width, 0);
+  scale(-1, 1); // 水平翻轉
+
   image(video, 0, 0, width, height);
 
   if (predictions.length > 0) {
@@ -45,8 +49,7 @@ function draw() {
     drawingContext.shadowBlur = 20;
 
     if (gesture === "rock") {
-      // 石頭：左右眼睛紅色半透明橢圓，較小且不易重疊
-      stroke(255, 0, 0, 180); // 紅色+透明度
+      stroke(255, 0, 0, 180);
       drawingContext.shadowColor = "red";
       strokeWeight(3);
       const leftEye = keypoints[33];
@@ -54,15 +57,13 @@ function draw() {
       ellipse(leftEye[0] - 10, leftEye[1], 40, 28);
       ellipse(rightEye[0] + 10, rightEye[1], 40, 28);
     } else if (gesture === "scissors") {
-      // 剪刀：額頭綠色半透明橢圓
-      stroke(0, 255, 0, 180); // 綠色+透明度
+      stroke(0, 255, 0, 180);
       drawingContext.shadowColor = "lime";
       strokeWeight(4);
       const pos = keypoints[10];
       ellipse(pos[0], pos[1], 100, 60);
     } else if (gesture === "paper") {
-      // 布：左右臉頰藍色半透明橢圓
-      stroke(0, 128, 255, 180); // 藍色+透明度
+      stroke(0, 128, 255, 180);
       drawingContext.shadowColor = "blue";
       strokeWeight(4);
       const leftCheek = keypoints[234];
@@ -71,7 +72,6 @@ function draw() {
       ellipse(rightCheek[0], rightCheek[1], 80, 80);
     }
 
-    // 關閉陰影
     drawingContext.shadowBlur = 0;
 
     // 顯示手勢文字（加底色圓角框）
@@ -85,6 +85,7 @@ function draw() {
     textAlign(LEFT, TOP);
     text(gesture, 16, 12);
   }
+  pop();
 }
 
 // 手勢偵測（簡易版：根據手指張開數量判斷剪刀石頭布）
